@@ -15,6 +15,7 @@ and:
 dependencies {
     compile 'com.github.rogerp91:MlProgress:{latest version}'
 }
+```
 
 ### Based:
   - [Material-ish Progress](https://github.com/pnikosis/materialish-progress)
