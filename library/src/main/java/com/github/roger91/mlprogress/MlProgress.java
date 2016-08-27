@@ -36,8 +36,6 @@ import android.view.View;
 public class MlProgress extends View {
 
     private final int barLength = 16;
-    private final int barMaxLength = 270;
-    private final long pauseGrowingTime = 200;
     private int circleRadius = 28;
     private int barWidth = 4;
     private int rimWidth = 4;
@@ -213,7 +211,6 @@ public class MlProgress extends View {
             canvas.drawArc(circleBounds, from, length, false, barPaint);
         } else {
             float oldProgress = mProgress;
-
             if (mProgress != mTargetProgress) {
                 mustInvalidate = true;
                 float deltaTime = (float) (SystemClock.uptimeMillis() - lastTimeAnirped) / 1000;
@@ -252,6 +249,7 @@ public class MlProgress extends View {
     }
 
     private void updateBarLength(long deltaTimeInMilliSeconds) {
+        long pauseGrowingTime = 200;
         if (pausedTimeWithoutGrowing >= pauseGrowingTime) {
             timeStartGrowing += deltaTimeInMilliSeconds;
 
@@ -261,6 +259,7 @@ public class MlProgress extends View {
                 barGrowingFromFront = !barGrowingFromFront;
             }
             float distance = (float) Math.cos((timeStartGrowing / barSpinCycleTime + 1) * Math.PI) / 2 + 0.5f;
+            int barMaxLength = 270;
             float destLength = (barMaxLength - barLength);
             if (barGrowingFromFront) {
                 barExtraLength = distance * destLength;
@@ -335,7 +334,7 @@ public class MlProgress extends View {
     @Override
     public Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
-        WheelSavedState ss = new WheelSavedState(superState);
+        RpSavedState ss = new RpSavedState(superState);
         ss.mProgress = this.mProgress;
         ss.mTargetProgress = this.mTargetProgress;
         ss.isSpinning = this.isSpinning;
@@ -352,12 +351,12 @@ public class MlProgress extends View {
 
     @Override
     public void onRestoreInstanceState(Parcelable state) {
-        if (!(state instanceof WheelSavedState)) {
+        if (!(state instanceof RpSavedState)) {
             super.onRestoreInstanceState(state);
             return;
         }
 
-        WheelSavedState ss = (WheelSavedState) state;
+        RpSavedState ss = (RpSavedState) state;
         super.onRestoreInstanceState(ss.getSuperState());
         this.mProgress = ss.mProgress;
         this.mTargetProgress = ss.mTargetProgress;
@@ -476,15 +475,15 @@ public class MlProgress extends View {
         public void onProgressUpdate(float progress);
     }
 
-    static class WheelSavedState extends BaseSavedState {
-        public static final Creator<WheelSavedState> CREATOR =
-                new Creator<WheelSavedState>() {
-                    public WheelSavedState createFromParcel(Parcel in) {
-                        return new WheelSavedState(in);
+    static class RpSavedState extends BaseSavedState {
+        public static final Creator<RpSavedState> CREATOR =
+                new Creator<RpSavedState>() {
+                    public RpSavedState createFromParcel(Parcel in) {
+                        return new RpSavedState(in);
                     }
 
-                    public WheelSavedState[] newArray(int size) {
-                        return new WheelSavedState[size];
+                    public RpSavedState[] newArray(int size) {
+                        return new RpSavedState[size];
                     }
                 };
         float mProgress;
@@ -499,11 +498,11 @@ public class MlProgress extends View {
         boolean linearProgress;
         boolean fillRadius;
 
-        WheelSavedState(Parcelable superState) {
+        RpSavedState(Parcelable superState) {
             super(superState);
         }
 
-        private WheelSavedState(Parcel in) {
+        private RpSavedState(Parcel in) {
             super(in);
             this.mProgress = in.readFloat();
             this.mTargetProgress = in.readFloat();
