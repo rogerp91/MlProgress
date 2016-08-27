@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MlProgress">
+        <attr name="rpProg_progressIndeterminate" format="boolean" />
+        <attr name="rpProg_barColor" format="color" />
+        <attr name="rpProg_rimColor" format="color" />
+        <attr name="rpProg_rimWidth" format="dimension" />
+        <attr name="rpProg_spinSpeed" format="float" />
+        <attr name="rpProg_barSpinCycleTime" format="integer" />
+        <attr name="rpProg_circleRadius" format="dimension" />
+        <attr name="rpProg_fillRadius" format="boolean" />
+        <attr name="rpProg_barWidth" format="dimension" />
+        <attr name="rpProg_linearProgress" format="boolean" />
+    </declare-styleable>
+
+</resources>
