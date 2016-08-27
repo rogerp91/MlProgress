@@ -17,9 +17,54 @@ dependencies {
 }
 ```
 
-### Based:
+## Usage
+
+You can create your own progress wheel in xml like this (remeber to add ```xmlns:wheel="http://schemas.android.com/apk/res-auto"```):
+
+```xml
+    <com.github.roger91.mlprogress.MlProgress
+        android:id="@+id/progress_wheel"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        wheel:rpProg_barColor="#5588FF"
+        wheel:rpProg_progressIndeterminate="true" />
+```
+Or in code:
+
+```Java
+MlProgress mlProgress = new MlProgress(context);
+mlProgress.setBarColor(Color.BLUE);
+...
+
+```
+
+### Callback
+
+Use ```setCallback(ProgressCallback)``` to assign a callback that will be called each time the progress changes. This way you can update a value on the progress alongside with the progress animation, or execute an action once the progress reaches a certain value. in the indeterminatge wheel, the callback is called with a value of -1.0f every time the animation cycle finishes (when the wheel shrinks back to its smaller size).
+
+### Indeterminate wheel
+
+For making the wheel indeterminate, just call the ```spin()``` method. If you set a progress value, the wheel will stop spinning.
+
+You have two methods for setting the progress:
+
+```mlProgress.setProgress(float value)```
+
+Sets the value, and the wheel will smoothly animate to that value. The speed of the animation is defined by the spinSpeed (can be set with ```setSpinSpeed```, which number is the number of full turns per second)
+
+```mlProgress.setInstantProgress(float value)```
+
+Sets the value, and the wheel will instantly move to that value.
+
+You can change other wheel properties such as the progress bar color, the wheel's background or the wheel's size and width.
+
+### Fill radius
+
+In case you want the spinning wheel to fill the whole layout instead of having a fixed size, you can use ```rpProg_fillRadius```.
+
+### Based
   - [Material-ish Progress](https://github.com/pnikosis/materialish-progress)
-  
 
 ### License
     Copyright 2016 Roger Patiño
